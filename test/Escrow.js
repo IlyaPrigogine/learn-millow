@@ -17,7 +17,7 @@ describe('Escrow', () => {
         const RealEstate = await ethers.getContractFactory('RealEstate')
         realEstate = await RealEstate.deploy()
 
-        // Mint 
+        // Mint
         let transaction = await realEstate.connect(seller).mint("https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS")
         await transaction.wait()
 
@@ -40,9 +40,11 @@ describe('Escrow', () => {
     })
 
     describe('Deployment', () => {
-        it('Returns NFT address', async () => {
+        it.only('Returns NFT address', async () => {
             const result = await escrow.nftAddress()
             expect(result).to.be.equal(realEstate.address)
+
+            expect(await escrow.seller.address).to.be.equal(seller.address);
         })
 
         it('Returns seller', async () => {
